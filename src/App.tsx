@@ -1,24 +1,64 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import EditTask from './components/EditTask';
+import Todo from './components/Todo';
+import { generateID } from './helpers/functions';
+import type Task from './types/Task';
 
 function App() {
+  const [allTasks, setAllTasks] = React.useState<Task[]>([
+    {
+      id: generateID(),
+      name: 'Training at the Gym',
+      createdDate: '2022-04-01',
+      isCompleted: true,
+    },
+    {
+      id: generateID(),
+      name: 'Play Paddle with friends',
+      createdDate: '2022-04-02',
+      isCompleted: false,
+    },
+    {
+      id: generateID(),
+      name: 'Burger BBQ with family',
+      createdDate: '2022-04-03',
+      isCompleted: false,
+    },
+  ])
+
+  const appendTask = (task: Task) => {
+    const tempTasks = [...allTasks]
+    tempTasks.push(task)
+    setAllTasks(tempTasks)
+  }
+
+  const deleteTask = (task: Task) => {
+    console.log(task)
+    const tempTasks = [...allTasks]
+    setAllTasks(tempTasks.filter(t => t.id !== task.id))
+  }
+
+  const updateTask = (task: Task) => {
+    const tempTasks = [...allTasks]
+    const taskIndex = tempTasks.findIndex(t => t.id === task.id)
+    tempTasks.splice(taskIndex, 1, task)
+    setAllTasks(tempTasks)
+  }
+
+  const [activePage, setActivePage] = React.useState<string>('todo'); // todo, edit-task
+  const [task, setTask] = React.useState<Task>({
+    id: generateID(),
+    name: '',
+    createdDate: '',
+    isCompleted: false,
+  })
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="wrapper">
+        <Todo tasks={allTasks} setTask={setTask} setActivePage={setActivePage} updateTask={updateTask} />
+        <EditTask task={task} setTask={setTask} setActivePage={setActivePage} appendTask={appendTask} updateTask={updateTask} deleteTask={deleteTask} />
+      </div>
     </div>
   );
 }
