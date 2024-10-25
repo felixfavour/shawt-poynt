@@ -5,13 +5,14 @@ import TaskCard from './TaskCard';
 import Task from '../types/Task';
 
 interface TodoProps {
-  tasks: Task[],
+  tasks: Task[]
   setTask: React.Dispatch<React.SetStateAction<Task>>
   setActivePage: React.Dispatch<React.SetStateAction<string>>
+  activePage: string
   updateTask: (task: Task) => void
 }
 
-const Todo: React.FC<TodoProps> = ({ tasks, setTask, setActivePage, updateTask }) => {
+const Todo: React.FC<TodoProps> = ({ tasks, setTask, activePage, setActivePage, updateTask }) => {
   const completeTask = (task: Task) => {
     const tempTask: Task = {
       ...task,
@@ -20,7 +21,7 @@ const Todo: React.FC<TodoProps> = ({ tasks, setTask, setActivePage, updateTask }
     updateTask(tempTask)
   }
   return (
-    <div className="todo">
+    <div className={`todo ${activePage === 'todo' ? '' : 'hidden'}`}>
       <header>
         <img src="/images/avatar.png" alt="" />
         <div className="texts">
@@ -38,7 +39,7 @@ const Todo: React.FC<TodoProps> = ({ tasks, setTask, setActivePage, updateTask }
       <main>
         <div className="tasks">
           {tasks.map((task: Task) => (
-            <TaskCard key={task.id} task={task} setTask={setTask} completeTask={completeTask} />
+            <TaskCard key={task.id} task={task} setTask={setTask} setActivePage={setActivePage} completeTask={completeTask} />
           ))}
         </div>
         <div className="actions">

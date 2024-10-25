@@ -6,10 +6,11 @@ import '../App.css';
 interface TaskCardProps {
   task: Task,
   setTask: React.Dispatch<React.SetStateAction<Task>>
+  setActivePage: React.Dispatch<React.SetStateAction<string>>
   completeTask: (task: Task) => void
 }
 
-const TaskCard = ({ task, setTask, completeTask }: TaskCardProps) => {
+const TaskCard = ({ task, setTask, setActivePage, completeTask }: TaskCardProps) => {
   return (
     <div className={`task-card ${task.isCompleted ? 'completed' : ''}`}>
       <div className="info">
@@ -20,7 +21,10 @@ const TaskCard = ({ task, setTask, completeTask }: TaskCardProps) => {
           {task.name}
         </div>
       </div>
-      <button className="outline-btn" onClick={() => setTask(task)}>
+      <button className="outline-btn" onClick={() => {
+        setTask(task)
+        setActivePage('edit-task')
+      }}>
         Edit
       </button>
     </div>

@@ -31,12 +31,14 @@ function App() {
     const tempTasks = [...allTasks]
     tempTasks.push(task)
     setAllTasks(tempTasks)
+    setActivePage('todo')
   }
 
   const deleteTask = (task: Task) => {
     console.log(task)
     const tempTasks = [...allTasks]
     setAllTasks(tempTasks.filter(t => t.id !== task.id))
+    setActivePage('todo')
   }
 
   const updateTask = (task: Task) => {
@@ -44,6 +46,7 @@ function App() {
     const taskIndex = tempTasks.findIndex(t => t.id === task.id)
     tempTasks.splice(taskIndex, 1, task)
     setAllTasks(tempTasks)
+    setActivePage('todo')
   }
 
   const [activePage, setActivePage] = React.useState<string>('todo'); // todo, edit-task
@@ -56,8 +59,8 @@ function App() {
   return (
     <div className="app">
       <div className="wrapper">
-        <Todo tasks={allTasks} setTask={setTask} setActivePage={setActivePage} updateTask={updateTask} />
-        <EditTask task={task} setTask={setTask} setActivePage={setActivePage} appendTask={appendTask} updateTask={updateTask} deleteTask={deleteTask} />
+        <Todo tasks={allTasks} setTask={setTask} activePage={activePage} setActivePage={setActivePage} updateTask={updateTask} />
+        <EditTask task={task} setTask={setTask} activePage={activePage} setActivePage={setActivePage} appendTask={appendTask} updateTask={updateTask} deleteTask={deleteTask} />
       </div>
     </div>
   );

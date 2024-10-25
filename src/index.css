@@ -26,9 +26,3 @@ body {
     --sidebar-width: 385px;
   }
 }
-
-@media screen and (max-width: 600px) {
-  :root {
-    --sidebar-width: 100%;
-  }
-}

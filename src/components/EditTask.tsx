@@ -7,8 +7,9 @@ interface TaskCardProps {
   task: Task,
   setTask: React.Dispatch<React.SetStateAction<Task>>
   setActivePage: React.Dispatch<React.SetStateAction<string>>
-  appendTask: (task: Task) => void,
-  deleteTask: (task: Task) => void,
+  activePage: string
+  appendTask: (task: Task) => void
+  deleteTask: (task: Task) => void
   updateTask: (task: Task) => void
 }
 
